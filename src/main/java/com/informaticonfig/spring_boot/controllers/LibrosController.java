@@ -1,9 +1,9 @@
 package com.informaticonfig.spring_boot.controllers;
 
 import com.informaticonfig.spring_boot.dto.LibrosDTO;
-import com.informaticonfig.spring_boot.models.Autor;
 import com.informaticonfig.spring_boot.models.Libros;
 import com.informaticonfig.spring_boot.services.LibrosService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +36,22 @@ public class LibrosController {
     public ResponseEntity<Libros> save(@RequestBody Libros libros) {
         librosService.guardar(libros);
         return new ResponseEntity<>(libros, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<LibrosDTO> actualizar(@PathVariable Integer id, @RequestBody Libros libros) {
+        libros.setId(id);
+        LibrosDTO libroActualizado = librosService.actualizar(libros);
+        return new ResponseEntity<>(libroActualizado, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
+        try {
+            librosService.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

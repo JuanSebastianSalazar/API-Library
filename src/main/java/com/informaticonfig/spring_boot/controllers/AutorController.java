@@ -3,7 +3,7 @@ package com.informaticonfig.spring_boot.controllers;
 import com.informaticonfig.spring_boot.dto.AutorDTO;
 import com.informaticonfig.spring_boot.models.Autor;
 import com.informaticonfig.spring_boot.services.AutorService;
-import com.informaticonfig.spring_boot.services.AutorServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +38,20 @@ public class AutorController {
         return new ResponseEntity<>(autor, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<AutorDTO> actualizar(@PathVariable Integer id, @RequestBody Autor autor) {
         autor.setId(id);
         AutorDTO autorActualizado = autorService.actualizar(autor);
         return new ResponseEntity<>(autorActualizado, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
+        try {
+            autorService.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

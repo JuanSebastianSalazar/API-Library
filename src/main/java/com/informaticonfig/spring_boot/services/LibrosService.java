@@ -10,5 +10,6 @@ public interface LibrosService {
     List<LibrosDTO> listarLibros();
     Optional<LibrosDTO> buscarPorId(Integer id);
     LibrosDTO guardar(Libros libro);
+    LibrosDTO actualizar(Libros libro);
     void eliminar(Integer id);
 }

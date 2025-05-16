@@ -5,6 +5,7 @@ import com.informaticonfig.spring_boot.models.Autor;
 import com.informaticonfig.spring_boot.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,11 +32,13 @@ public class AutorServiceImpl implements AutorService{
     }
 
     @Override
+    @Transactional
     public AutorDTO guardar(Autor autor) {
         return new AutorDTO(autorRepository.save(autor));
     }
 
     @Override
+    @Transactional
     public AutorDTO actualizar(Autor autor) {
         Optional<Autor> autorExiste = Optional.ofNullable(autorRepository.findById(autor.getId())
                 .orElseThrow(() -> new RuntimeException("Autor no existe" + autor.getId())));
@@ -47,6 +50,7 @@ public class AutorServiceImpl implements AutorService{
     }
 
     @Override
+    @Transactional
     public void eliminar(Integer id) {
         autorRepository.deleteById(id);
     }

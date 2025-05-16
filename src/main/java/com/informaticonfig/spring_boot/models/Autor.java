@@ -1,5 +1,6 @@
 package com.informaticonfig.spring_boot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,5 +27,6 @@ public class Autor {
 
     @OneToMany(mappedBy = "autor")
     @JsonManagedReference
+    @JsonIgnore
     List<Libros> libros;
 }
