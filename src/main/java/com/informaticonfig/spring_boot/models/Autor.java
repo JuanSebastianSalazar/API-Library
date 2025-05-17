@@ -21,8 +21,14 @@ public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
     private String apellido;
+
+    @Column(nullable = false)
     private String telefono;
 
     @OneToMany(mappedBy = "autor")
